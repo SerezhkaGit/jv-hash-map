@@ -2,9 +2,9 @@ package core.basesyntax;
 
 public class MyHashMap<K, V> implements MyMap<K, V> {
     private static class Entry<K, V> {
-        K key;
-        V value;
-        Entry<K, V> next;
+        private K key;
+        private V value;
+        private Entry<K, V> next;
 
         public Entry(K key, V value, Entry<K, V> next) {
             this.key = key;
@@ -50,7 +50,8 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
         Entry<K, V> current = head;
 
         while (current != null) {
-            if ((current.key == null && key == null) || (current.key != null && current.key.equals(key))) {
+            if ((current.key == null && key == null)
+                    || (current.key != null && current.key.equals(key))) {
                 current.value = value;
                 return;
             }
@@ -63,10 +64,10 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
     }
 
     public void resize() {
-        Entry<K, V>[] oldBuckets = this.buckets;
-        capacity *= 2;
-        buckets = new Entry[capacity];
         size = 0;
+        capacity *= 2;
+        Entry<K, V>[] oldBuckets = this.buckets;
+        buckets = new Entry[capacity];
 
         for (Entry<K, V> head : oldBuckets) {
             Entry<K, V> current = head;
@@ -94,7 +95,8 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
         int index = Math.abs(key.hashCode() % capacity);
         Entry<K, V> current = buckets[index];
         while (current != null) {
-            if ((current.key == null && key == null) || (current.key != null && current.key.equals(key))) {
+            if ((current.key == null && key == null)
+                    || (current.key != null && current.key.equals(key))) {
                 return current.value;
             }
             current = current.next;
