@@ -64,10 +64,13 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
     }
 
     public void resize() {
-        size = 0;
+        int oldCapacity = capacity;
         capacity *= 2;
-        Entry<K, V>[] oldBuckets = this.buckets;
-        buckets = new Entry[capacity];
+        Entry<K, V>[] oldBuckets = buckets;
+        buckets = (Entry<K, V>[]) new Entry[capacity];
+
+        int oldSize = size;
+        size = 0;
 
         for (Entry<K, V> head : oldBuckets) {
             Entry<K, V> current = head;
@@ -76,7 +79,7 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
                 current = current.next;
             }
         }
-
+        size = oldSize;
     }
 
     @Override
